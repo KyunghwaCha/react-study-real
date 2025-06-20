@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -7,18 +8,15 @@ function Detail() {
   const { id } = useParams();
   const [movieInfo, setMovieInfo] = useState({});
   const getMovieInfo = async () => {
-    const response = await fetch(
+    const response = await axios.get(
       `https://yts.mx/api/v2/movie_details.json?movie_id=${id}`
     );
-    const json = await response.json();
-    setMovieInfo(json.data.movie);
+    setMovieInfo(response.data.data.movie);
   };
 
   useEffect(() => {
     getMovieInfo();
   }, []);
-
-  console.log(movieInfo);
 
   return (
     <div>
